@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From Code to Cloud · Mahnoor Saeed</title>
+  <link rel="icon" href="../assets/monogram.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@500;700&display=swap">
+  <style>
+    /* DevFusion brand: devfusion-branding/DESIGN.md */
+    :root {
+      --dark: #0c0a12;
+      --violet: #a535ff;
+      --lilac: #c08cff;
+      --lavender: #dcccf1;
+      --muted: #a49bb8;
+      --red: #f87171;
+      --green: #4ade80;
+      --amber: #fbbf24;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; background: #000; }
+
+    body {
+      font-family: "Montserrat", system-ui, sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Every slide is a fixed 1280x720 canvas, scaled to fit the screen */
+    .deck {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1280px;
+      height: 720px;
+      transform-origin: center;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 720px;
+      padding: 64px 80px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(165, 53, 255, 0.35), transparent 45%),
+        radial-gradient(circle at 95% 100%, rgba(192, 140, 255, 0.18), transparent 40%),
+        linear-gradient(180deg, #07060c, #140d26);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s;
+    }
+
+    .slide.active { opacity: 1; visibility: visible; }
+
+    /* Stars */
+    .slide::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+        radial-gradient(1px 1px at 90px 120px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 160px 60px, #dcccf1, transparent),
+        radial-gradient(1px 1px at 230px 170px, #fff, transparent);
+      background-size: 260px 240px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .slide > * { position: relative; }
+
+    /* Things that rise in when a slide appears */
+    .rise { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+    .active .rise { opacity: 1; transform: none; }
+    .active .d1 { transition-delay: 0.15s; }
+    .active .d2 { transition-delay: 0.3s; }
+    .active .d3 { transition-delay: 0.45s; }
+    .active .d4 { transition-delay: 0.6s; }
+    .active .d5 { transition-delay: 0.75s; }
+
+    .logo { height: 40px; }
+    .corner { position: absolute; top: 40px; right: 56px; }
+    .page { position: absolute; right: 56px; bottom: 32px; font-size: 14px; color: var(--muted); }
+
+    .kicker { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); }
+    h1, h2, .big { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
+    h1 { font-size: 150px; }
+    h2 { font-size: 92px; }
+    .grad { background: linear-gradient(90deg, var(--lilac), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { font-size: 28px; line-height: 1.45; color: var(--lavender); }
+
+    .qr {
+      display: inline-block;
+      padding: 12px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 0 50px rgba(165, 53, 255, 0.55);
+    }
+    .qr img { display: block; }
+    .qr-label { margin-top: 12px; font-size: 18px; font-weight: 700; text-align: center; }
+    .qr-url { margin-top: 4px; font-size: 14px; text-align: center; color: var(--muted); }
+
+    /* Slide 1: title */
+    .s-title { display: flex; align-items: center; justify-content: space-between; }
+    .s-title .speaker { margin-top: 36px; padding-left: 20px; border-left: 4px solid var(--violet); }
+    .s-title .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 52px; line-height: 1; }
+    .s-title .role { margin-top: 4px; font-size: 22px; color: var(--lavender); }
+    .event { margin-bottom: 18px; font-size: 18px; font-weight: 700; color: var(--muted); }
+
+    /* Slide 2: works on my laptop */
+    .pain { margin-top: 44px; display: flex; }
+    .pain div + div { margin-left: 22px; }
+    .pain div {
+      flex: 1;
+      padding: 26px;
+      border-radius: 20px;
+      background: rgba(248, 113, 113, 0.08);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      font-size: 24px;
+      line-height: 1.35;
+    }
+    .pain .emoji { display: block; margin-bottom: 12px; font-size: 44px; }
+    .cue { margin-top: 40px; font-size: 26px; font-weight: 700; color: var(--lilac); }
+
+    /* Slide 3: the pipeline */
+    .flow { margin-top: 56px; display: flex; align-items: center; }
+    .step {
+      flex: 1;
+      padding: 26px 10px;
+      border-radius: 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+    .step .icon { font-size: 46px; }
+    .step .label { margin-top: 8px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 40px; }
+    .step.cloud { border-color: var(--violet); background: rgba(165, 53, 255, 0.18); }
+    .flow .arrow { margin: 0 12px; font-size: 40px; color: var(--muted); }
+    .active .step { animation: light 0.5s ease-out both; }
+    .active .step:nth-child(1) { animation-delay: 0.4s; }
+    .active .step:nth-child(3) { animation-delay: 0.9s; }
+    .active .step:nth-child(5) { animation-delay: 1.4s; }
+    .active .step:nth-child(7) { animation-delay: 1.9s; }
+    .active .step:nth-child(9) { animation-delay: 2.4s; }
+    .defs { margin-top: 44px; display: flex; }
+    .defs div + div { margin-left: 22px; }
+    .defs div { flex: 1; padding: 24px 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); font-size: 24px; line-height: 1.4; }
+    .defs b { display: block; margin-bottom: 6px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 40px; font-weight: 400; color: var(--lilac); }
+    .rule { margin-top: 30px; font-size: 26px; font-weight: 700; text-align: center; }
+
+    /* Slide 4: spot the secret */
+    .snips { margin-top: 40px; display: flex; }
+    .snip + .snip { margin-left: 22px; }
+    .snip { flex: 1; border-radius: 18px; overflow: hidden; background: #110d1c; border: 3px solid rgba(255, 255, 255, 0.12); transition: all 0.4s; }
+    .snip .tag { padding: 12px 20px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 34px; background: rgba(255, 255, 255, 0.06); }
+    .snip pre { padding: 20px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 19px; line-height: 1.6; color: var(--lavender); white-space: pre-wrap; }
+    .snip .k { color: var(--lilac); }
+    .snip .s { color: #86efac; }
+    .revealed .snip { opacity: 0.4; }
+    .revealed .snip.leak { opacity: 1; border-color: var(--red); box-shadow: 0 0 50px rgba(248, 113, 113, 0.5); transform: scale(1.04); }
+    .answer { margin-top: 34px; font-size: 26px; line-height: 1.45; text-align: center; opacity: 0; transition: opacity 0.4s; }
+    .revealed .answer { opacity: 1; }
+    .answer b { color: var(--green); }
+
+    /* Slide 5: takeaways */
+    .takeaways { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; }
+    .takeaways div { width: calc(50% - 10px); margin-bottom: 20px; display: flex; align-items: center; padding: 24px 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); font-size: 27px; font-weight: 700; line-height: 1.3; }
+    .takeaways span { flex: none; margin-right: 22px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 64px; font-weight: 400; line-height: 1; }
+    .motto { margin-top: 44px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 66px; line-height: 1; text-align: center; }
+
+    /* Slide 6: thank you */
+    .s-thanks { display: flex; flex-direction: column; }
+    .thanks-row { margin-top: 34px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .thanks-person .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 72px; line-height: 1; }
+    .thanks-person .role { margin-top: 6px; font-size: 24px; color: var(--lavender); }
+    .thanks-person .brand { margin-top: 34px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.15); }
+    .thanks-person .brand p { margin-top: 10px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 36px; }
+    .thanks-person .brand a { color: var(--lilac); font-weight: 700; font-size: 22px; text-decoration: none; }
+    .qrs { display: flex; }
+    .qrs > div + div { margin-left: 34px; }
+
+    /* Slide 7: plan B */
+    .s-backup { text-align: center; }
+    .s-backup video { margin: 30px auto 0; display: block; width: 880px; height: 495px; border-radius: 18px; background: #110d1c; border: 2px solid rgba(192, 140, 255, 0.4); }
+
+    @keyframes light {
+      0% { border-color: rgba(255, 255, 255, 0.15); transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { border-color: var(--green); background: rgba(74, 222, 128, 0.12); transform: scale(1); }
+    }
+
+    /* Print mode (?print): every slide on its own page, for the PDF */
+    body.print { overflow: visible; background: #07060c; }
+    .print .deck { position: static; transform: none !important; }
+    .print .slide { position: relative; opacity: 1; visibility: visible; page-break-after: always; }
+    .print .rise { opacity: 1; transform: none; }
+    .print .s-backup video { display: none; }
+  </style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1. Title -->
+  <section class="slide s-title">
+    <div>
+      <img class="logo rise" src="../assets/logo.png" alt="DevFusion">
+      <p class="event rise d1" style="margin-top: 40px;">Codrithm Spark 2026 · Module 04</p>
+      <h1 class="rise d1">From code<br><span class="grad">to cloud</span></h1>
+      <p class="lead rise d2" style="margin-top: 14px;">CI/CD &amp; Cloud Deployment, live</p>
+      <div class="speaker rise d3">
+        <p class="name">Mahnoor Saeed</p>
+        <p class="role">DevOps Engineer · DevFusion Tech</p>
+      </div>
+    </div>
+    <div class="rise d4">
+      <div class="qr"><img src="assets/qr-site.png" width="300" height="300" alt="QR code to the live demo"></div>
+      <p class="qr-label">📱 Scan to join the mission 🚀</p>
+      <p class="qr-url">sudo-mahnoor.github.io/ship-it-live</p>
+    </div>
+  </section>
+
+  <!-- 2. The problem -->
+  <section class="slide">
+    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
+    <p class="kicker rise">The problem</p>
+    <h2 class="rise d1" style="margin-top: 14px;">"But it works on<br><span class="grad">my laptop!"</span> 🤷</h2>
+    <div class="pain">
+      <div class="rise d2"><span class="emoji">📂</span>Copying files to the server by hand</div>
+      <div class="rise d3"><span class="emoji">✏️</span>Editing code directly on a live server</div>
+      <div class="rise d4"><span class="emoji">🙏</span>Pushing at midnight and hoping nothing breaks</div>
+    </div>
+    <p class="cue rise d5">Writing code is one thing. Getting it into production is another. →</p>
+    <p class="page">2</p>
+  </section>
+
+  <!-- 3. What is CI/CD -->
+  <section class="slide">
+    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
+    <p class="kicker rise">The fix</p>
+    <h2 class="rise d1" style="margin-top: 14px;">What is <span class="grad">CI/CD?</span></h2>
+    <div class="flow rise d2">
+      <div class="step"><div class="icon">💻</div><div class="label">Code</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="icon">🧪</div><div class="label">Test</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="icon">📦</div><div class="label">Build</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="icon">🚀</div><div class="label">Deploy</div></div>
+      <span class="arrow">›</span>
+      <div class="step cloud"><div class="icon">☁️</div><div class="label">Cloud</div></div>
+    </div>
+    <div class="defs">
+      <div class="rise d3"><b>CI · Continuous Integration</b>Every change you push is tested automatically.</div>
+      <div class="rise d4"><b>CD · Continuous Deployment</b>If the tests pass, it ships to the cloud automatically.</div>
+    </div>
+    <p class="rule rise d5">If any step fails, <span class="grad">nothing ships.</span> Your users stay safe.</p>
+    <p class="page">3</p>
+  </section>
+
+  <!-- 4. Spot the secret -->
+  <section class="slide" id="quiz">
+    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
+    <p class="kicker rise">Quick quiz</p>
+    <h2 class="rise d1" style="margin-top: 14px;">Spot the <span class="grad">leaked secret</span> 🔑</h2>
+    <div class="snips">
+      <div class="snip rise d2"><p class="tag">A</p><pre><span class="k">const</span> port = <span class="s">3000</span>;
+<span class="k">const</span> appName = <span class="s">"Codrithm"</span>;
+<span class="k">const</span> debug = <span class="s">false</span>;</pre></div>
+      <div class="snip leak rise d3"><p class="tag">B</p><pre><span class="k">const</span> db = <span class="s">"postgres"</span>;
+<span class="k">const</span> apiKey =
+  <span class="s">"sk_live_51HxDEMOKEY"</span>;
+<span class="k">const</span> retries = <span class="s">3</span>;</pre></div>
+      <div class="snip rise d4"><p class="tag">C</p><pre><span class="k">const</span> apiKey =
+  process.env.<span class="s">API_KEY</span>;
+<span class="k">const</span> region = <span class="s">"ap-south-1"</span>;</pre></div>
+    </div>
+    <p class="answer"><b>B leaks a live key.</b> Bots scan GitHub for keys all day.<br>C is the right way: secrets live in <b>environment variables</b> and <b>GitHub Secrets</b>, never in code.</p>
+    <p class="page">4</p>
+  </section>
+
+  <!-- 5. Takeaways -->
+  <section class="slide">
+    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
+    <p class="kicker rise">Take this home</p>
+    <h2 class="rise d1" style="margin-top: 14px;">4 things to <span class="grad">remember</span></h2>
+    <div class="takeaways">
+      <div class="rise d2"><span class="grad">1</span>Manual deploys break things.</div>
+      <div class="rise d3"><span class="grad">2</span>A pipeline tests, builds and deploys for you.</div>
+      <div class="rise d4"><span class="grad">3</span>Bad code gets stopped before users see it.</div>
+      <div class="rise d5"><span class="grad">4</span>Secrets never go in code.</div>
+    </div>
+    <p class="motto rise d5">Deploying is easy. <span class="grad">Shipping safely is the skill.</span></p>
+    <p class="page">5</p>
+  </section>
+
+  <!-- 6. Thank you -->
+  <section class="slide s-thanks">
+    <p class="kicker rise">Thank you · Questions?</p>
+    <h2 class="rise d1" style="margin-top: 14px;">Mission <span class="grad">complete</span> 🚀</h2>
+    <div class="thanks-row">
+      <div class="thanks-person rise d2">
+        <p class="name">Mahnoor Saeed</p>
+        <p class="role">DevOps Engineer · DevFusion Tech</p>
+        <div class="brand">
+          <img class="logo" src="../assets/logo.png" alt="DevFusion">
+          <p>Built by engineers. Run by engineers.</p>
+          <a href="https://devfusion.tech">devfusion.tech</a>
+        </div>
+      </div>
+      <div class="qrs rise d3">
+        <div>
+          <div class="qr"><img src="assets/qr-linkedin.png" width="210" height="210" alt="QR code to Mahnoor's LinkedIn"></div>
+          <p class="qr-label">Connect on LinkedIn</p>
+        </div>
+        <div>
+          <div class="qr"><img src="assets/qr-repo.png" width="210" height="210" alt="QR code to the demo repo"></div>
+          <p class="qr-label">Fork the demo repo</p>
+        </div>
+      </div>
+    </div>
+    <p class="page">6</p>
+  </section>
+
+  <!-- 7. Plan B -->
+  <section class="slide s-backup">
+    <p class="kicker rise">Plan B</p>
+    <h2 class="rise d1" style="margin-top: 14px; font-size: 72px;">The Wi-Fi didn't pass its tests 😅</h2>
+    <video src="backup.mp4" controls preload="none"></video>
+    <p class="page">7</p>
+  </section>
+
+</div>
+
+<script>
+// Arrow keys, space or a clicker move between slides. ?print shows all slides for the PDF.
+(function () {
+  var slides = document.querySelectorAll(".slide");
+  var deck = document.getElementById("deck");
+  var quiz = document.getElementById("quiz");
+  var current = 0;
+
+  if (location.search.indexOf("print") !== -1) {
+    document.body.className = "print";
+    return;
+  }
+
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    deck.style.transform = "translate(-50%, -50%) scale(" + scale + ")";
+  }
+
+  function go(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove("active");
+    current = n;
+    slides[current].classList.add("active");
+    quiz.classList.remove("revealed");
+    location.hash = String(n + 1);
+  }
+
+  function next() {
+    // On the quiz, the first press reveals the answer
+    if (slides[current] === quiz && !quiz.classList.contains("revealed")) {
+      quiz.classList.add("revealed");
+      return;
+    }
+    go(current + 1);
+  }
+
+  document.addEventListener("keydown", function (e) {
+    var k = e.key;
+    if (k === "ArrowRight" || k === "PageDown" || k === " " || k === "Enter") { e.preventDefault(); next(); }
+    if (k === "ArrowLeft" || k === "PageUp" || k === "Backspace") { e.preventDefault(); go(current - 1); }
+    if (k === "Home") go(0);
+    if (k === "End") go(slides.length - 1);
+  });
+  document.addEventListener("click", function (e) { if (e.target.tagName !== "VIDEO" && e.target.tagName !== "A") next(); });
+
+  window.addEventListener("resize", fit);
+  fit();
+  var start = parseInt(location.hash.slice(1), 10) - 1;
+  slides[0].classList.add("active");
+  if (start > 0) go(start);
+})();
+</script>
+</body>
+</html>

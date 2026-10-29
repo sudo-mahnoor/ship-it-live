@@ -38,6 +38,8 @@ jobs:
         run: |
           mkdir -p _site
           cp -r site/. _site/
+          # Fresh asset URLs on every deploy, so phones never run a cached old script
+          sed -i "s/app\.js\"/app.js?v=${GITHUB_SHA}\"/; s/style\.css\"/style.css?v=${GITHUB_SHA}\"/" _site/index.html
           cat > _site/version.json <<EOF
           {"sha": "${GITHUB_SHA}", "run": ${GITHUB_RUN_NUMBER}, "time": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"}
           EOF

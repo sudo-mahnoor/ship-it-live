@@ -3,52 +3,115 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Client Rescue · DevFusion</title>
+  <title>Rocket to the Cloud · DevFusion</title>
   <link rel="icon" href="assets/monogram.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@500;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="ch-1">
+  <!-- Sky -->
+  <div class="stars"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="ground"></div>
+
   <header>
     <img class="logo" src="assets/logo.png" alt="DevFusion">
+    <span class="chapter-pill" id="chapter-pill">Chapter 1</span>
     <span class="live"><span class="dot"></span> LIVE</span>
   </header>
 
-  <main>
-    <p class="kicker">A DevFusion client rescue</p>
+  <!-- CI/CD pipeline status -->
+  <div class="pipeline">
+    <span class="chip off" id="chip-test">TEST</span>
+    <span class="arrow">›</span>
+    <span class="chip off" id="chip-build">BUILD</span>
+    <span class="arrow">›</span>
+    <span class="chip off" id="chip-deploy">DEPLOY</span>
+  </div>
 
-    <ol class="tracker" id="tracker" aria-label="Story progress">
-      <li>Crash</li><li>Rescue</li><li>Test</li><li>Launch</li>
-    </ol>
+  <!-- Launch pad -->
+  <div class="pad"></div>
+  <div class="plate" id="plate">Untested rocket</div>
 
-    <p class="chapter-no" id="chapter-no">Chapter 1</p>
-    <h1 id="title">The 3am call</h1>
-    <p class="story" id="story"></p>
+  <div class="rocket" id="rocket">
+    <div class="flame"></div>
+    <svg viewBox="0 0 100 200" aria-hidden="true">
+      <defs>
+        <linearGradient id="hull" x1="0" x2="1">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset="1" stop-color="#dcccf1"/>
+        </linearGradient>
+        <linearGradient id="brand" x1="0" x2="1">
+          <stop offset="0" stop-color="#c08cff"/>
+          <stop offset="1" stop-color="#a535ff"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 112 L4 166 L26 156 Z" fill="url(#brand)"/>
+      <path d="M76 112 L96 166 L74 156 Z" fill="url(#brand)"/>
+      <path d="M50 4 C72 30 78 72 76 156 L24 156 C22 72 28 30 50 4 Z" fill="url(#hull)"/>
+      <path d="M50 4 C60 16 66 28 69 40 L31 40 C34 28 40 16 50 4 Z" fill="url(#brand)"/>
+      <circle cx="50" cy="74" r="13" fill="#0c0a12" stroke="url(#brand)" stroke-width="5"/>
+      <circle cx="45" cy="69" r="4" fill="#c08cff" opacity="0.7"/>
+      <rect x="24" y="122" width="52" height="8" fill="url(#brand)"/>
+      <rect x="34" y="156" width="32" height="12" rx="3" fill="#3a2a55"/>
+    </svg>
+  </div>
 
-    <section class="store" id="store">
-      <div class="store-head">
-        <span class="store-name">Lahore Bites</span>
-        <span class="status" id="status">Down</span>
-      </div>
-      <p class="store-label" id="store-label">Today's special</p>
-      <p class="special" id="special">…</p>
-    </section>
+  <div class="steam" id="steam"><span></span><span></span><span></span></div>
+  <div class="boom" id="boom"></div>
+  <div class="shield" id="shield">🛡️</div>
+  <div class="bug" id="bug">🐛</div>
 
-    <section class="cta" id="cta" hidden>
-      <p class="cta-line">Built by engineers. Run by engineers.</p>
-      <p class="cta-sub">Tell us what's breaking.</p>
-      <a class="cta-link" href="https://devfusion.tech" target="_blank" rel="noopener">devfusion.tech</a>
-    </section>
+  <!-- Big moments -->
+  <div class="banner" id="banner"></div>
+  <div class="alert" id="alert">MANUAL LAUNCH FAILED</div>
+  <div class="countdown" id="countdown"></div>
+  <div class="confetti" id="confetti"></div>
 
-    <p class="hint">Keep this page open. It updates by itself on every deploy.</p>
-  </main>
+  <section class="finale" id="finale">
+    <p class="finale-kicker">☁️ Welcome to the cloud</p>
+    <p class="finale-name" id="finale-name">Codrithm One</p>
+    <p class="finale-line">Code to cloud. Safely.</p>
+    <div class="finale-brand">
+      <img src="assets/logo.png" alt="DevFusion">
+      <p>Built by engineers. Run by engineers.</p>
+      <a href="https://devfusion.tech" target="_blank" rel="noopener">devfusion.tech</a>
+    </div>
+  </section>
 
-  <footer>
-    <p id="deploy">Deploy info loading…</p>
-    <p class="note">Lahore Bites is a fictional client made for this demo.</p>
-  </footer>
+  <!-- Fusion, the mission control robot -->
+  <div class="crew" id="crew" title="Tap to replay">
+    <svg class="robot" viewBox="0 0 120 140" aria-hidden="true">
+      <defs>
+        <linearGradient id="robo" x1="0" x2="1">
+          <stop offset="0" stop-color="#c08cff"/>
+          <stop offset="1" stop-color="#a535ff"/>
+        </linearGradient>
+      </defs>
+      <line x1="60" y1="8" x2="60" y2="24" stroke="#c08cff" stroke-width="4"/>
+      <circle class="antenna" cx="60" cy="8" r="7" fill="#4ade80"/>
+      <rect x="14" y="22" width="92" height="68" rx="24" fill="url(#robo)"/>
+      <rect x="26" y="36" width="68" height="38" rx="17" fill="#0c0a12"/>
+      <ellipse class="eye" cx="47" cy="53" rx="6" ry="8" fill="#c08cff"/>
+      <ellipse class="eye" cx="73" cy="53" rx="6" ry="8" fill="#c08cff"/>
+      <path d="M50 65 Q60 71 70 65" stroke="#c08cff" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="34" y="94" width="52" height="40" rx="14" fill="url(#robo)"/>
+      <rect class="arm" x="88" y="98" width="10" height="26" rx="5" fill="#a535ff"/>
+      <rect x="22" y="98" width="10" height="26" rx="5" fill="#c08cff"/>
+      <circle cx="60" cy="113" r="7" fill="#0c0a12"/>
+      <circle cx="60" cy="113" r="3" fill="#4ade80"/>
+    </svg>
+    <div class="bubble" id="bubble">
+      <p class="speaker">Fusion · Mission Control</p>
+      <p id="bubble-text"></p>
+    </div>
+  </div>
+
+  <footer id="deploy">Deploy info loading…</footer>
 
   <script src="app.js"></script>
 </body>

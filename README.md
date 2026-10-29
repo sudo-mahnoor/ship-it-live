@@ -1,7 +1,6 @@
 # Ship It Live 🚀
 
-**A DevFusion client rescue story**, told live with a real CI/CD pipeline.
-Lahore Bites is a fictional client made for the demo.
+**Rocket to the Cloud**: a live CI/CD story told by Fusion, DevFusion's mission control robot.
 Every push to `main` is **tested → built → deployed** to GitHub Pages automatically.
 
 **Live site:** https://sudo-mahnoor.github.io/ship-it-live/
@@ -16,8 +15,8 @@ push ──► Test ──► Build ──► Deploy ──► 📱 every phone 
 
 | Path | What it is |
 |---|---|
-| `site/` | The website (HTML, CSS, JS, DevFusion logo). `data.json` holds the chapter and today's special |
-| `tests/check_site.py` | Quality gate: valid JSON, chapter 1 to 4, sensible special, no leaked secrets |
+| `site/` | The website (HTML, CSS, JS, DevFusion logo). `data.json` holds the chapter and the rocket's name |
+| `tests/check_site.py` | Quality gate: valid JSON, chapter 1 to 4, sensible rocket name, no leaked secrets |
 | `.github/workflows/pipeline.yml` | The pipeline: Test → Build → Deploy |
 
 Open phones poll for a new deploy every 10 seconds, so the page updates on its own.
@@ -36,22 +35,24 @@ Open phones poll for a new deploy every 10 seconds, so the page updates on its o
 Everything is driven by two lines in `site/data.json`:
 ```json
 "chapter": 1,
-"special": "Chicken Karahi 🍲",
+"rocket": "Codrithm One"
 ```
+Edit them on GitHub (pencil icon), commit to `main`, and every phone plays the next chapter.
+Tap the robot to replay the current chapter.
 
 | Chapter | On every phone | What you do |
 |---|---|---|
-| **1. The 3am call** | Store crashed, grey, 502 error | Starting state. Tell the story: manual edits on the live server broke it |
-| **2. The rescue** | Store back online, pipeline on | Set `"chapter": 2` and the room's vote as `"special"`. Push and show Test → Build → Deploy |
-| **3. The Friday test** | "Someone pushes a broken menu..." | Set `"chapter": 3`, push. Then do *Break my pipeline* below |
-| **4. Back in business** | Happy ending + DevFusion call to action | Set `"chapter": 4`, push. Close the talk |
+| **1. Manual launch** | Rocket launched by hand, shakes and explodes. "MANUAL LAUNCH FAILED" | Starting state |
+| **2. The pipeline** | TEST, BUILD, DEPLOY light up green. New rocket with the room's name | Set `"chapter": 2` and the room's name as `"rocket"`. Push |
+| **3. The Friday bug** | A bug crawls in, TEST blocks it, rocket stays safe | Set `"chapter": 3`, push. Then do *Break my pipeline* below |
+| **4. Liftoff** | Countdown 3, 2, 1, liftoff, confetti, "Welcome to the cloud" + DevFusion | Set `"chapter": 4`, push. Close the talk |
 
 ### Break my pipeline (during chapter 3)
 Pick one:
 
 - **Broken JSON:** delete a closing quote in `data.json`
 - **Leaked secret:** add a line with AWS's public example key, `AKIA` followed by `IOSFODNN7EXAMPLE`
-- **Bad data:** set `"special"` to an empty string, or `"chapter": 5`
+- **Bad data:** set `"rocket"` to an empty string, or `"chapter": 5`
 
 Push it. **Test** turns red ❌, Build and Deploy never run, and **every phone stays on chapter 3.**
 Then fix it, push again, and it goes green ✅.
@@ -67,6 +68,6 @@ python3 tests/check_site.py
 
 ## Reset after rehearsal
 ```bash
-git checkout story-start -- site/data.json
+git checkout rocket-start -- site/data.json
 git commit -m "Reset demo" && git push
 ```

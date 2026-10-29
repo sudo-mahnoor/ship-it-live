@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 SITE = Path(__file__).resolve().parent.parent / "site"
-MAX_SPECIAL_LENGTH = 30
+MAX_ROCKET_LENGTH = 20
 CHAPTERS = (1, 2, 3, 4)
 TEXT_SUFFIXES = {".html", ".css", ".js", ".json"}
 
@@ -37,10 +37,10 @@ for name in ("index.html", "style.css", "app.js", "data.json", "assets/logo.png"
 try:
     data = json.loads((SITE / "data.json").read_text(encoding="utf-8"))
     check(True, "data.json is valid JSON")
-    check(data.get("chapter") in CHAPTERS, f"chapter is one of {CHAPTERS}")
-    special = str(data.get("special", "")).strip()
-    check(bool(special), "special is not empty")
-    check(len(special) <= MAX_SPECIAL_LENGTH, f"special is at most {MAX_SPECIAL_LENGTH} characters")
+    check(type(data.get("chapter")) is int and data.get("chapter") in CHAPTERS, f"chapter is one of {CHAPTERS}")
+    rocket = str(data.get("rocket", "")).strip()
+    check(bool(rocket), "rocket name is not empty")
+    check(len(rocket) <= MAX_ROCKET_LENGTH, f"rocket name is at most {MAX_ROCKET_LENGTH} characters")
 except (OSError, json.JSONDecodeError) as err:
     check(False, f"data.json is valid JSON ({err})")
 

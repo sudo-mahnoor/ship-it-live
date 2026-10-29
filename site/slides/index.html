@@ -4,14 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>From Code to Cloud · Mahnoor Saeed</title>
-  <link rel="icon" href="../assets/monogram.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@500;700&display=swap">
   <style>
-    /* DevFusion brand: devfusion-branding/DESIGN.md */
+    /* Colour palette from devfusion-branding/DESIGN.md */
     :root {
-      --dark: #0c0a12;
       --violet: #a535ff;
       --lilac: #c08cff;
       --lavender: #dcccf1;
@@ -19,27 +17,18 @@
       --red: #f87171;
       --green: #4ade80;
       --amber: #fbbf24;
+      --panel: rgba(255, 255, 255, 0.05);
+      --line: rgba(255, 255, 255, 0.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body { height: 100%; background: #000; }
 
-    body {
-      font-family: "Montserrat", system-ui, sans-serif;
-      color: #fff;
-      overflow: hidden;
-    }
+    body { font-family: "Montserrat", system-ui, sans-serif; color: #fff; overflow: hidden; }
 
     /* Every slide is a fixed 1280x720 canvas, scaled to fit the screen */
-    .deck {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 1280px;
-      height: 720px;
-      transform-origin: center;
-    }
+    .deck { position: absolute; top: 50%; left: 50%; width: 1280px; height: 720px; }
 
     .slide {
       position: absolute;
@@ -47,157 +36,149 @@
       left: 0;
       width: 1280px;
       height: 720px;
-      padding: 64px 80px;
+      padding: 56px 72px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 12% 0%, rgba(165, 53, 255, 0.35), transparent 45%),
-        radial-gradient(circle at 95% 100%, rgba(192, 140, 255, 0.18), transparent 40%),
+        radial-gradient(circle at 10% 0%, rgba(165, 53, 255, 0.32), transparent 45%),
+        radial-gradient(circle at 95% 100%, rgba(192, 140, 255, 0.16), transparent 40%),
         linear-gradient(180deg, #07060c, #140d26);
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.5s;
     }
-
     .slide.active { opacity: 1; visibility: visible; }
-
-    /* Stars */
-    .slide::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-image:
-        radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
-        radial-gradient(1px 1px at 90px 120px, #fff, transparent),
-        radial-gradient(1.5px 1.5px at 160px 60px, #dcccf1, transparent),
-        radial-gradient(1px 1px at 230px 170px, #fff, transparent);
-      background-size: 260px 240px;
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
     .slide > * { position: relative; }
 
-    /* Things that rise in when a slide appears */
-    .rise { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+    .rise { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
     .active .rise { opacity: 1; transform: none; }
-    .active .d1 { transition-delay: 0.15s; }
-    .active .d2 { transition-delay: 0.3s; }
-    .active .d3 { transition-delay: 0.45s; }
-    .active .d4 { transition-delay: 0.6s; }
-    .active .d5 { transition-delay: 0.75s; }
+    .active .d1 { transition-delay: 0.12s; }
+    .active .d2 { transition-delay: 0.24s; }
+    .active .d3 { transition-delay: 0.36s; }
+    .active .d4 { transition-delay: 0.48s; }
+    .active .d5 { transition-delay: 0.6s; }
+    .active .d6 { transition-delay: 0.72s; }
+    .active .d7 { transition-delay: 0.84s; }
 
-    .logo { height: 40px; }
-    .corner { position: absolute; top: 40px; right: 56px; }
-    .page { position: absolute; right: 56px; bottom: 32px; font-size: 14px; color: var(--muted); }
+    .page { position: absolute; right: 48px; bottom: 26px; font-size: 14px; color: var(--muted); }
+    .footer-name { position: absolute; left: 72px; bottom: 26px; font-size: 14px; color: var(--muted); }
 
-    .kicker { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); }
-    h1, h2, .big { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
+    .kicker { font-size: 17px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); }
+    h1, h2 { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
     h1 { font-size: 150px; }
-    h2 { font-size: 92px; }
+    h2 { margin-top: 10px; font-size: 76px; }
     .grad { background: linear-gradient(90deg, var(--lilac), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .lead { font-size: 28px; line-height: 1.45; color: var(--lavender); }
+    .lead { font-size: 26px; line-height: 1.45; color: var(--lavender); }
+    .note { margin-top: 26px; font-size: 23px; font-weight: 700; }
+    .note .grad { font-weight: 700; }
 
-    .qr {
-      display: inline-block;
-      padding: 12px;
+    /* Reusable blocks */
+    .row { display: flex; }
+    .row > * + * { margin-left: 20px; }
+    .card { flex: 1; padding: 24px 26px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line); }
+    .card h3 { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; font-size: 36px; line-height: 1; color: var(--lilac); }
+    .card p, .card li { font-size: 20px; line-height: 1.45; color: var(--lavender); }
+    .card p { margin-top: 10px; }
+    .card ul { margin-top: 12px; list-style: none; }
+    .card li { padding-left: 22px; margin-top: 8px; position: relative; }
+    .card li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--violet); }
+    .card.bad { border-color: rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.06); }
+    .card.bad h3 { color: var(--red); }
+    .card.bad li::before { background: var(--red); }
+    .card.good { border-color: rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.06); }
+    .card.good h3 { color: var(--green); }
+    .card.good li::before { background: var(--green); }
+    .card.hot { border-color: var(--violet); background: rgba(165, 53, 255, 0.14); }
+
+    .code {
+      padding: 22px 26px;
       border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 0 50px rgba(165, 53, 255, 0.55);
+      background: #0f0b1a;
+      border: 1px solid rgba(192, 140, 255, 0.3);
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--lavender);
+      white-space: pre;
     }
+    .code .k { color: var(--lilac); }
+    .code .s { color: #86efac; }
+    .code .c { color: var(--muted); }
+    .code .hl { color: var(--amber); font-weight: 700; }
+
+    /* Numbered flow of steps */
+    .flow { display: flex; align-items: stretch; }
+    .flow .arrow { display: flex; align-items: center; margin: 0 8px; font-size: 30px; color: var(--muted); }
+    .flow .step { flex: 1; padding: 20px 14px; border-radius: 18px; text-align: center; background: var(--panel); border: 2px solid var(--line); }
+    .flow .num { font-family: "Bebas Neue", Impact, sans-serif; font-size: 44px; line-height: 1; }
+    .flow .name { margin-top: 6px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 30px; line-height: 1; }
+    .flow .desc { margin-top: 8px; font-size: 16px; line-height: 1.35; color: var(--lavender); }
+    .flow .step.lit { border-color: var(--violet); background: rgba(165, 53, 255, 0.14); }
+    .active .flow .step { animation: glow 0.5s ease-out both; }
+    .active .flow .step:nth-child(1) { animation-delay: 0.5s; }
+    .active .flow .step:nth-child(3) { animation-delay: 0.8s; }
+    .active .flow .step:nth-child(5) { animation-delay: 1.1s; }
+    .active .flow .step:nth-child(7) { animation-delay: 1.4s; }
+    .active .flow .step:nth-child(9) { animation-delay: 1.7s; }
+    .active .flow .step:nth-child(11) { animation-delay: 2s; }
+    .active .flow .step:nth-child(13) { animation-delay: 2.3s; }
+
+    /* Comparison table */
+    table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+    th { padding: 0 22px 4px; font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; font-size: 34px; text-align: left; }
+    td { padding: 15px 22px; font-size: 21px; line-height: 1.35; background: var(--panel); }
+    td:first-child { width: 190px; border-radius: 14px 0 0 14px; font-weight: 700; color: var(--lilac); }
+    td:last-child { border-radius: 0 14px 14px 0; }
+    td.bad { color: #fca5a5; }
+    td.good { color: #86efac; }
+    th.bad { color: var(--red); }
+    th.good { color: var(--green); }
+
+    .qr { display: inline-block; padding: 12px; border-radius: 18px; background: #fff; box-shadow: 0 0 50px rgba(165, 53, 255, 0.5); }
     .qr img { display: block; }
     .qr-label { margin-top: 12px; font-size: 18px; font-weight: 700; text-align: center; }
     .qr-url { margin-top: 4px; font-size: 14px; text-align: center; color: var(--muted); }
 
-    /* Slide 1: title */
+    /* Slide 5 is dense: tighter cards and code */
+    .s-pipe .card { padding: 16px 22px; }
+    .s-pipe .card h3 { font-size: 32px; }
+    .s-pipe .card p { margin-top: 6px; font-size: 19px; }
+    .s-pipe .code { padding: 16px 24px; font-size: 16px; line-height: 1.5; }
+
+    /* Slide 1 */
     .s-title { display: flex; align-items: center; justify-content: space-between; }
-    .s-title .speaker { margin-top: 36px; padding-left: 20px; border-left: 4px solid var(--violet); }
-    .s-title .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 52px; line-height: 1; }
-    .s-title .role { margin-top: 4px; font-size: 22px; color: var(--lavender); }
-    .event { margin-bottom: 18px; font-size: 18px; font-weight: 700; color: var(--muted); }
+    .event { margin-top: 20px; font-size: 18px; font-weight: 700; color: var(--muted); }
+    .speaker { margin-top: 34px; padding-left: 20px; border-left: 4px solid var(--violet); }
+    .speaker .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 52px; line-height: 1; }
+    .speaker .role { margin-top: 4px; font-size: 22px; color: var(--lavender); }
 
-    /* Slide 2: works on my laptop */
-    .pain { margin-top: 44px; display: flex; }
-    .pain div + div { margin-left: 22px; }
-    .pain div {
-      flex: 1;
-      padding: 26px;
-      border-radius: 20px;
-      background: rgba(248, 113, 113, 0.08);
-      border: 1px solid rgba(248, 113, 113, 0.35);
-      font-size: 24px;
-      line-height: 1.35;
-    }
-    .pain .emoji { display: block; margin-bottom: 12px; font-size: 44px; }
-    .cue { margin-top: 40px; font-size: 26px; font-weight: 700; color: var(--lilac); }
+    /* Roadmap */
+    .roadmap { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: space-between; }
+    .roadmap .card { flex: none; width: calc(25% - 15px); margin: 0 0 20px; padding: 20px 22px; }
+    .roadmap .card.tip { width: calc(25% - 15px); }
+    .roadmap .lvl { font-family: "Bebas Neue", Impact, sans-serif; font-size: 22px; color: var(--muted); }
 
-    /* Slide 3: the pipeline */
-    .flow { margin-top: 56px; display: flex; align-items: center; }
-    .step {
-      flex: 1;
-      padding: 26px 10px;
-      border-radius: 20px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      border: 3px solid rgba(255, 255, 255, 0.15);
-    }
-    .step .icon { font-size: 46px; }
-    .step .label { margin-top: 8px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 40px; }
-    .step.cloud { border-color: var(--violet); background: rgba(165, 53, 255, 0.18); }
-    .flow .arrow { margin: 0 12px; font-size: 40px; color: var(--muted); }
-    .active .step { animation: light 0.5s ease-out both; }
-    .active .step:nth-child(1) { animation-delay: 0.4s; }
-    .active .step:nth-child(3) { animation-delay: 0.9s; }
-    .active .step:nth-child(5) { animation-delay: 1.4s; }
-    .active .step:nth-child(7) { animation-delay: 1.9s; }
-    .active .step:nth-child(9) { animation-delay: 2.4s; }
-    .defs { margin-top: 44px; display: flex; }
-    .defs div + div { margin-left: 22px; }
-    .defs div { flex: 1; padding: 24px 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); font-size: 24px; line-height: 1.4; }
-    .defs b { display: block; margin-bottom: 6px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 40px; font-weight: 400; color: var(--lilac); }
-    .rule { margin-top: 30px; font-size: 26px; font-weight: 700; text-align: center; }
+    /* Takeaways */
+    .takeaways { margin-top: 34px; display: flex; flex-wrap: wrap; justify-content: space-between; }
+    .takeaways div { width: calc(50% - 10px); margin-bottom: 20px; display: flex; align-items: center; padding: 22px 26px; border-radius: 18px; background: var(--panel); font-size: 25px; font-weight: 700; line-height: 1.3; }
+    .takeaways span { flex: none; margin-right: 22px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 60px; font-weight: 400; line-height: 1; }
+    .motto { margin-top: 26px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 62px; line-height: 1; text-align: center; }
 
-    /* Slide 4: spot the secret */
-    .snips { margin-top: 40px; display: flex; }
-    .snip + .snip { margin-left: 22px; }
-    .snip { flex: 1; border-radius: 18px; overflow: hidden; background: #110d1c; border: 3px solid rgba(255, 255, 255, 0.12); transition: all 0.4s; }
-    .snip .tag { padding: 12px 20px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 34px; background: rgba(255, 255, 255, 0.06); }
-    .snip pre { padding: 20px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 19px; line-height: 1.6; color: var(--lavender); white-space: pre-wrap; }
-    .snip .k { color: var(--lilac); }
-    .snip .s { color: #86efac; }
-    .revealed .snip { opacity: 0.4; }
-    .revealed .snip.leak { opacity: 1; border-color: var(--red); box-shadow: 0 0 50px rgba(248, 113, 113, 0.5); transform: scale(1.04); }
-    .answer { margin-top: 34px; font-size: 26px; line-height: 1.45; text-align: center; opacity: 0; transition: opacity 0.4s; }
-    .revealed .answer { opacity: 1; }
-    .answer b { color: var(--green); }
-
-    /* Slide 5: takeaways */
-    .takeaways { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; }
-    .takeaways div { width: calc(50% - 10px); margin-bottom: 20px; display: flex; align-items: center; padding: 24px 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); font-size: 27px; font-weight: 700; line-height: 1.3; }
-    .takeaways span { flex: none; margin-right: 22px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 64px; font-weight: 400; line-height: 1; }
-    .motto { margin-top: 44px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 66px; line-height: 1; text-align: center; }
-
-    /* Slide 6: thank you */
-    .s-thanks { display: flex; flex-direction: column; }
-    .thanks-row { margin-top: 34px; display: flex; align-items: flex-end; justify-content: space-between; }
-    .thanks-person .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 72px; line-height: 1; }
-    .thanks-person .role { margin-top: 6px; font-size: 24px; color: var(--lavender); }
-    .thanks-person .brand { margin-top: 34px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.15); }
-    .thanks-person .brand p { margin-top: 10px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 36px; }
-    .thanks-person .brand a { color: var(--lilac); font-weight: 700; font-size: 22px; text-decoration: none; }
+    /* Thank you */
+    .thanks-row { margin-top: 40px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .thanks-person .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 80px; line-height: 1; }
+    .thanks-person .role { margin-top: 8px; font-size: 26px; color: var(--lavender); }
+    .thanks-person .ask { margin-top: 40px; font-size: 24px; line-height: 1.5; color: var(--lavender); }
     .qrs { display: flex; }
     .qrs > div + div { margin-left: 34px; }
 
-    /* Slide 7: plan B */
+    /* Plan B */
     .s-backup { text-align: center; }
-    .s-backup video { margin: 30px auto 0; display: block; width: 880px; height: 495px; border-radius: 18px; background: #110d1c; border: 2px solid rgba(192, 140, 255, 0.4); }
+    .s-backup video { margin: 30px auto 0; display: block; width: 880px; height: 495px; border-radius: 18px; background: #0f0b1a; border: 2px solid rgba(192, 140, 255, 0.4); }
 
-    @keyframes light {
-      0% { border-color: rgba(255, 255, 255, 0.15); transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { border-color: var(--green); background: rgba(74, 222, 128, 0.12); transform: scale(1); }
+    @keyframes glow {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); border-color: var(--lilac); }
+      100% { transform: scale(1); border-color: var(--violet); background: rgba(165, 53, 255, 0.14); }
     }
 
     /* Print mode (?print): every slide on its own page, for the PDF */
@@ -205,6 +186,7 @@
     .print .deck { position: static; transform: none !important; }
     .print .slide { position: relative; opacity: 1; visibility: visible; page-break-after: always; }
     .print .rise { opacity: 1; transform: none; }
+    .print .flow .step { border-color: var(--violet); background: rgba(165, 53, 255, 0.14); }
     .print .s-backup video { display: none; }
   </style>
 </head>
@@ -214,9 +196,8 @@
   <!-- 1. Title -->
   <section class="slide s-title">
     <div>
-      <img class="logo rise" src="../assets/logo.png" alt="DevFusion">
-      <p class="event rise d1" style="margin-top: 40px;">Codrithm Spark 2026 · Module 04</p>
-      <h1 class="rise d1">From code<br><span class="grad">to cloud</span></h1>
+      <p class="event rise">Codrithm Spark 2026 · Module 04</p>
+      <h1 class="rise d1" style="margin-top: 18px;">From code<br><span class="grad">to cloud</span></h1>
       <p class="lead rise d2" style="margin-top: 14px;">CI/CD &amp; Cloud Deployment, live</p>
       <div class="speaker rise d3">
         <p class="name">Mahnoor Saeed</p>
@@ -225,119 +206,231 @@
     </div>
     <div class="rise d4">
       <div class="qr"><img src="assets/qr-site.png" width="300" height="300" alt="QR code to the live demo"></div>
-      <p class="qr-label">📱 Scan to join the mission 🚀</p>
+      <p class="qr-label">Scan to join the live demo</p>
       <p class="qr-url">sudo-mahnoor.github.io/ship-it-live</p>
     </div>
   </section>
 
-  <!-- 2. The problem -->
+  <!-- 2. The code lifecycle -->
   <section class="slide">
-    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
-    <p class="kicker rise">The problem</p>
-    <h2 class="rise d1" style="margin-top: 14px;">"But it works on<br><span class="grad">my laptop!"</span> 🤷</h2>
-    <div class="pain">
-      <div class="rise d2"><span class="emoji">📂</span>Copying files to the server by hand</div>
-      <div class="rise d3"><span class="emoji">✏️</span>Editing code directly on a live server</div>
-      <div class="rise d4"><span class="emoji">🙏</span>Pushing at midnight and hoping nothing breaks</div>
+    <p class="kicker rise">The journey</p>
+    <h2 class="rise d1">The life of your <span class="grad">code</span></h2>
+    <div class="flow rise d2" style="margin-top: 40px;">
+      <div class="step"><div class="num grad">1</div><div class="name">Write</div><div class="desc">Code on your laptop</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">2</div><div class="name">Push</div><div class="desc">Commit to Git, push to GitHub</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">3</div><div class="name">Test</div><div class="desc">Automated checks run</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">4</div><div class="name">Build</div><div class="desc">Package the app</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">5</div><div class="name">Deploy</div><div class="desc">Ship it to the cloud</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">6</div><div class="name">Monitor</div><div class="desc">Logs, uptime, errors</div></div>
     </div>
-    <p class="cue rise d5">Writing code is one thing. Getting it into production is another. →</p>
+    <div class="row rise d3" style="margin-top: 34px;">
+      <div class="card"><h3>Where students stop</h3><p>Step 1. The project runs on localhost, and the demo works on one laptop.</p></div>
+      <div class="card hot"><h3>Where real products live</h3><p>Steps 2 to 6. Every change is checked, shipped and watched without anyone doing it by hand.</p></div>
+    </div>
+    <p class="note rise d4">Writing code is one thing. <span class="grad">Getting it into production is another.</span></p>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
     <p class="page">2</p>
   </section>
 
-  <!-- 3. What is CI/CD -->
+  <!-- 3. Manual vs automated -->
   <section class="slide">
-    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
-    <p class="kicker rise">The fix</p>
-    <h2 class="rise d1" style="margin-top: 14px;">What is <span class="grad">CI/CD?</span></h2>
-    <div class="flow rise d2">
-      <div class="step"><div class="icon">💻</div><div class="label">Code</div></div>
-      <span class="arrow">›</span>
-      <div class="step"><div class="icon">🧪</div><div class="label">Test</div></div>
-      <span class="arrow">›</span>
-      <div class="step"><div class="icon">📦</div><div class="label">Build</div></div>
-      <span class="arrow">›</span>
-      <div class="step"><div class="icon">🚀</div><div class="label">Deploy</div></div>
-      <span class="arrow">›</span>
-      <div class="step cloud"><div class="icon">☁️</div><div class="label">Cloud</div></div>
-    </div>
-    <div class="defs">
-      <div class="rise d3"><b>CI · Continuous Integration</b>Every change you push is tested automatically.</div>
-      <div class="rise d4"><b>CD · Continuous Deployment</b>If the tests pass, it ships to the cloud automatically.</div>
-    </div>
-    <p class="rule rise d5">If any step fails, <span class="grad">nothing ships.</span> Your users stay safe.</p>
+    <p class="kicker rise">Why it matters</p>
+    <h2 class="rise d1">Manual deploy vs <span class="grad">pipeline</span></h2>
+    <table class="rise d2" style="margin-top: 26px;">
+      <tr><th></th><th class="bad">By hand</th><th class="good">With a pipeline</th></tr>
+      <tr><td>Steps</td><td class="bad">Copy files, restart, hope. Steps get forgotten</td><td class="good">The same steps, in the same order, every time</td></tr>
+      <tr><td>Testing</td><td class="bad">Often skipped when there is a deadline</td><td class="good">Runs on every single change</td></tr>
+      <tr><td>Bad code</td><td class="bad">Users find the bug first</td><td class="good">Blocked before it reaches users</td></tr>
+      <tr><td>Rollback</td><td class="bad">Panic and fix it live on the server</td><td class="good">Redeploy the last good version</td></tr>
+      <tr><td>History</td><td class="bad">"Who changed this?" Nobody knows</td><td class="good">Every deploy is linked to a commit</td></tr>
+    </table>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
     <p class="page">3</p>
   </section>
 
-  <!-- 4. Spot the secret -->
-  <section class="slide" id="quiz">
-    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
-    <p class="kicker rise">Quick quiz</p>
-    <h2 class="rise d1" style="margin-top: 14px;">Spot the <span class="grad">leaked secret</span> 🔑</h2>
-    <div class="snips">
-      <div class="snip rise d2"><p class="tag">A</p><pre><span class="k">const</span> port = <span class="s">3000</span>;
-<span class="k">const</span> appName = <span class="s">"Codrithm"</span>;
-<span class="k">const</span> debug = <span class="s">false</span>;</pre></div>
-      <div class="snip leak rise d3"><p class="tag">B</p><pre><span class="k">const</span> db = <span class="s">"postgres"</span>;
-<span class="k">const</span> apiKey =
-  <span class="s">"sk_live_51HxDEMOKEY"</span>;
-<span class="k">const</span> retries = <span class="s">3</span>;</pre></div>
-      <div class="snip rise d4"><p class="tag">C</p><pre><span class="k">const</span> apiKey =
-  process.env.<span class="s">API_KEY</span>;
-<span class="k">const</span> region = <span class="s">"ap-south-1"</span>;</pre></div>
+  <!-- 4. CI vs CD vs CD -->
+  <section class="slide">
+    <p class="kicker rise">The words</p>
+    <h2 class="rise d1">CI, CD and <span class="grad">CD</span></h2>
+    <div class="row" style="margin-top: 34px;">
+      <div class="card rise d2"><h3>Continuous Integration</h3><p>Push small changes often. Every push is <b>built and tested automatically</b>, so problems show up in minutes, not weeks.</p></div>
+      <div class="card rise d3"><h3>Continuous Delivery</h3><p>Every change that passes is <b>ready to release</b>. A person still presses the final "deploy" button.</p></div>
+      <div class="card hot rise d4"><h3>Continuous Deployment</h3><p>Every change that passes <b>goes live automatically</b>. No button, no waiting.</p></div>
     </div>
-    <p class="answer"><b>B leaks a live key.</b> Bots scan GitHub for keys all day.<br>C is the right way: secrets live in <b>environment variables</b> and <b>GitHub Secrets</b>, never in code.</p>
+    <div class="row rise d5" style="margin-top: 26px;">
+      <div class="card"><h3>The golden rule</h3><p>If any step fails, nothing ships. The last good version stays live.</p></div>
+      <div class="card"><h3>In today's demo</h3><p>We use Continuous Deployment: one git push, and your phones update.</p></div>
+    </div>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
     <p class="page">4</p>
   </section>
 
-  <!-- 5. Takeaways -->
+  <!-- 5. Anatomy of a pipeline -->
   <section class="slide">
-    <img class="logo corner" src="../assets/logo.png" alt="DevFusion">
+    <p class="kicker rise">Under the hood</p>
+    <h2 class="rise d1">Inside a <span class="grad">pipeline</span></h2>
+    <div class="row s-pipe" style="margin-top: 24px;">
+      <div class="rise d2" style="flex: 0 0 470px;">
+        <div class="card" style="margin-bottom: 12px;"><h3>Trigger</h3><p>What starts it: a push, a pull request or a schedule.</p></div>
+        <div class="card" style="margin-bottom: 12px;"><h3>Job and steps</h3><p>A job is a list of steps. Each step is one command, like "run the tests".</p></div>
+        <div class="card"><h3>Runner</h3><p>A fresh cloud machine that runs the job, then disappears.</p></div>
+      </div>
+      <div class="code rise d3" style="flex: 1;"><span class="c"># .github/workflows/pipeline.yml</span>
+<span class="k">on</span>:
+  <span class="k">push</span>:
+    <span class="k">branches</span>: [<span class="s">main</span>]   <span class="c"># trigger</span>
+
+<span class="k">jobs</span>:
+  <span class="k">test</span>:
+    <span class="k">runs-on</span>: <span class="s">ubuntu-latest</span>   <span class="c"># runner</span>
+    <span class="k">steps</span>:
+      - <span class="k">uses</span>: <span class="s">actions/checkout@v4</span>
+      - <span class="k">run</span>: <span class="s">python tests/check_site.py</span>
+
+  <span class="k">deploy</span>:
+    <span class="hl">needs: test</span>   <span class="c"># only if tests pass</span>
+    <span class="k">runs-on</span>: <span class="s">ubuntu-latest</span>
+    <span class="k">steps</span>:
+      - <span class="k">uses</span>: <span class="s">actions/deploy-pages@v4</span></div>
+    </div>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
+    <p class="page">5</p>
+  </section>
+
+  <!-- 6. Team workflow -->
+  <section class="slide">
+    <p class="kicker rise">Working in a team</p>
+    <h2 class="rise d1">Pull requests and <span class="grad">protected main</span></h2>
+    <div class="flow rise d2" style="margin-top: 36px;">
+      <div class="step"><div class="num grad">1</div><div class="name">Branch</div><div class="desc">feature/login</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">2</div><div class="name">Commit</div><div class="desc">Small, clear changes</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">3</div><div class="name">Pull request</div><div class="desc">Ask to merge into main</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">4</div><div class="name">Checks + review</div><div class="desc">CI runs, a teammate reviews</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">5</div><div class="name">Merge</div><div class="desc">Into main</div></div>
+      <span class="arrow">›</span>
+      <div class="step"><div class="num grad">6</div><div class="name">Deploy</div><div class="desc">Pipeline ships it</div></div>
+    </div>
+    <div class="row rise d3" style="margin-top: 30px;">
+      <div class="card"><h3>Branch protection rules</h3>
+        <ul><li>No direct pushes to main</li><li>CI checks must pass before merge</li><li>At least one approval from a teammate</li></ul></div>
+      <div class="card"><h3>Why teams do this</h3>
+        <ul><li>Main is always working and deployable</li><li>Two pairs of eyes catch more bugs</li><li>Every change has a story you can read later</li></ul></div>
+    </div>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
+    <p class="page">6</p>
+  </section>
+
+  <!-- 7. Secrets -->
+  <section class="slide">
+    <p class="kicker rise">Security</p>
+    <h2 class="rise d1">Keep secrets <span class="grad">out of code</span></h2>
+    <div class="row" style="margin-top: 30px;">
+      <div class="card bad rise d2"><h3>Never</h3>
+        <ul><li>Hardcode API keys or passwords in code</li><li>Commit your .env file</li><li>Paste keys in chats or screenshots</li></ul></div>
+      <div class="card good rise d3"><h3>Instead</h3>
+        <ul><li>Environment variables</li><li>GitHub Secrets or a cloud secret manager</li><li>Different keys for dev, staging and production</li></ul></div>
+      <div class="card rise d4"><h3>If a key leaks</h3>
+        <ul><li>Revoke and replace it right away</li><li>Deleting the commit is not enough. Git history keeps it</li><li>Check the usage and the bill</li></ul></div>
+    </div>
+    <div class="row rise d5" style="margin-top: 24px; align-items: center;">
+      <div class="code" style="flex: 0 0 560px; font-size: 19px;"><span class="c"># in the workflow file</span>
+<span class="k">env</span>:
+  <span class="k">API_KEY</span>: <span class="hl">${{ secrets.API_KEY }}</span></div>
+      <p class="lead" style="flex: 1;">Bots scan public GitHub repos for keys all day. A leaked cloud key can be abused within minutes.</p>
+    </div>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
+    <p class="page">7</p>
+  </section>
+
+  <!-- 8. Where to deploy -->
+  <section class="slide">
+    <p class="kicker rise">The cloud</p>
+    <h2 class="rise d1">Where can you <span class="grad">deploy?</span></h2>
+    <div class="row" style="margin-top: 30px;">
+      <div class="card rise d2"><h3>Static sites and frontends</h3><p>GitHub Pages, Vercel, Netlify</p><p>Portfolios, landing pages, React and Next.js apps. Free tiers to start.</p></div>
+      <div class="card rise d3"><h3>Full-stack apps and APIs</h3><p>Render, Railway, Fly.io</p><p>Backends, databases, bots. Push code and the platform runs it.</p></div>
+      <div class="card hot rise d4"><h3>Full control at scale</h3><p>AWS, Azure, Google Cloud</p><p>Servers, networks, Kubernetes. What most companies run on.</p></div>
+    </div>
+    <div class="row rise d5" style="margin-top: 22px;">
+      <div class="card"><h3>Docker</h3><p>Package your app with everything it needs. It runs the same on your laptop, in CI and in the cloud.</p></div>
+      <div class="card"><h3>Infrastructure as Code</h3><p>Tools like Terraform describe servers in code. No more clicking around a console and forgetting what you did.</p></div>
+    </div>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
+    <p class="page">8</p>
+  </section>
+
+  <!-- 9. Roadmap -->
+  <section class="slide">
+    <p class="kicker rise">What to learn next</p>
+    <h2 class="rise d1">Your DevOps <span class="grad">roadmap</span></h2>
+    <div class="roadmap">
+      <div class="card rise d2"><p class="lvl">Step 1</p><h3>Git and GitHub</h3><p>Branches, pull requests, clean commits</p></div>
+      <div class="card rise d2"><p class="lvl">Step 2</p><h3>GitHub Actions</h3><p>Your first CI/CD pipeline</p></div>
+      <div class="card rise d3"><p class="lvl">Step 3</p><h3>Linux basics</h3><p>Terminal, SSH, processes, networking</p></div>
+      <div class="card rise d3"><p class="lvl">Step 4</p><h3>Docker</h3><p>Containers and images</p></div>
+      <div class="card rise d4"><p class="lvl">Step 5</p><h3>One cloud</h3><p>AWS, Azure or GCP fundamentals</p></div>
+      <div class="card rise d4"><p class="lvl">Step 6</p><h3>Terraform</h3><p>Infrastructure as Code</p></div>
+      <div class="card rise d5"><p class="lvl">Step 7</p><h3>Monitoring</h3><p>Logs, metrics and alerts</p></div>
+      <div class="card hot tip rise d5"><p class="lvl">Start today</p><h3>Ship one project</h3><p>End to end, with a pipeline. Put the live link on your CV.</p></div>
+    </div>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
+    <p class="page">9</p>
+  </section>
+
+  <!-- 10. Takeaways -->
+  <section class="slide">
     <p class="kicker rise">Take this home</p>
-    <h2 class="rise d1" style="margin-top: 14px;">4 things to <span class="grad">remember</span></h2>
+    <h2 class="rise d1">4 things to <span class="grad">remember</span></h2>
     <div class="takeaways">
       <div class="rise d2"><span class="grad">1</span>Manual deploys break things.</div>
       <div class="rise d3"><span class="grad">2</span>A pipeline tests, builds and deploys for you.</div>
       <div class="rise d4"><span class="grad">3</span>Bad code gets stopped before users see it.</div>
       <div class="rise d5"><span class="grad">4</span>Secrets never go in code.</div>
     </div>
-    <p class="motto rise d5">Deploying is easy. <span class="grad">Shipping safely is the skill.</span></p>
-    <p class="page">5</p>
+    <p class="motto rise d6">Deploying is easy. <span class="grad">Shipping safely is the skill.</span></p>
+    <p class="footer-name">Mahnoor Saeed · From Code to Cloud</p>
+    <p class="page">10</p>
   </section>
 
-  <!-- 6. Thank you -->
-  <section class="slide s-thanks">
-    <p class="kicker rise">Thank you · Questions?</p>
-    <h2 class="rise d1" style="margin-top: 14px;">Mission <span class="grad">complete</span> 🚀</h2>
+  <!-- 11. Thank you -->
+  <section class="slide">
+    <p class="kicker rise">Thank you</p>
+    <h2 class="rise d1" style="font-size: 96px;">Questions<span class="grad">?</span></h2>
     <div class="thanks-row">
       <div class="thanks-person rise d2">
         <p class="name">Mahnoor Saeed</p>
         <p class="role">DevOps Engineer · DevFusion Tech</p>
-        <div class="brand">
-          <img class="logo" src="../assets/logo.png" alt="DevFusion">
-          <p>Built by engineers. Run by engineers.</p>
-          <a href="https://devfusion.tech">devfusion.tech</a>
-        </div>
+        <p class="ask">Fork the demo repo, build your own pipeline,<br>and send me the live link.</p>
       </div>
       <div class="qrs rise d3">
         <div>
-          <div class="qr"><img src="assets/qr-linkedin.png" width="210" height="210" alt="QR code to Mahnoor's LinkedIn"></div>
+          <div class="qr"><img src="assets/qr-linkedin.png" width="220" height="220" alt="QR code to Mahnoor's LinkedIn"></div>
           <p class="qr-label">Connect on LinkedIn</p>
         </div>
         <div>
-          <div class="qr"><img src="assets/qr-repo.png" width="210" height="210" alt="QR code to the demo repo"></div>
+          <div class="qr"><img src="assets/qr-repo.png" width="220" height="220" alt="QR code to the demo repo"></div>
           <p class="qr-label">Fork the demo repo</p>
         </div>
       </div>
     </div>
-    <p class="page">6</p>
+    <p class="page">11</p>
   </section>
 
-  <!-- 7. Plan B -->
+  <!-- 12. Plan B -->
   <section class="slide s-backup">
     <p class="kicker rise">Plan B</p>
-    <h2 class="rise d1" style="margin-top: 14px; font-size: 72px;">The Wi-Fi didn't pass its tests 😅</h2>
+    <h2 class="rise d1" style="font-size: 68px;">The Wi-Fi didn't pass its tests</h2>
     <video src="backup.mp4" controls preload="none"></video>
-    <p class="page">7</p>
+    <p class="page">12</p>
   </section>
 
 </div>
@@ -347,7 +440,6 @@
 (function () {
   var slides = document.querySelectorAll(".slide");
   var deck = document.getElementById("deck");
-  var quiz = document.getElementById("quiz");
   var current = 0;
 
   if (location.search.indexOf("print") !== -1) {
@@ -365,32 +457,24 @@
     slides[current].classList.remove("active");
     current = n;
     slides[current].classList.add("active");
-    quiz.classList.remove("revealed");
     location.hash = String(n + 1);
-  }
-
-  function next() {
-    // On the quiz, the first press reveals the answer
-    if (slides[current] === quiz && !quiz.classList.contains("revealed")) {
-      quiz.classList.add("revealed");
-      return;
-    }
-    go(current + 1);
   }
 
   document.addEventListener("keydown", function (e) {
     var k = e.key;
-    if (k === "ArrowRight" || k === "PageDown" || k === " " || k === "Enter") { e.preventDefault(); next(); }
+    if (k === "ArrowRight" || k === "PageDown" || k === " " || k === "Enter") { e.preventDefault(); go(current + 1); }
     if (k === "ArrowLeft" || k === "PageUp" || k === "Backspace") { e.preventDefault(); go(current - 1); }
     if (k === "Home") go(0);
     if (k === "End") go(slides.length - 1);
   });
-  document.addEventListener("click", function (e) { if (e.target.tagName !== "VIDEO" && e.target.tagName !== "A") next(); });
+  document.addEventListener("click", function (e) {
+    if (e.target.tagName !== "VIDEO" && e.target.tagName !== "A") go(current + 1);
+  });
 
   window.addEventListener("resize", fit);
   fit();
-  var start = parseInt(location.hash.slice(1), 10) - 1;
   slides[0].classList.add("active");
+  var start = parseInt(location.hash.slice(1), 10) - 1;
   if (start > 0) go(start);
 })();
 </script>

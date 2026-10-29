@@ -73,7 +73,7 @@ git commit -m "Reset demo" && git push
 ```
 
 ## Slides
-- **Present:** https://sudo-mahnoor.github.io/ship-it-live/slides/ (arrow keys, space or a clicker; on slide 4 the first press reveals the answer)
+- **Present:** https://sudo-mahnoor.github.io/ship-it-live/slides/ (arrow keys, space or a clicker)
 - **PDF backup:** `site/slides/From-Code-to-Cloud-Mahnoor-Saeed.pdf`
 - **Rebuild the PDF** after editing `site/slides/index.html` (serve `site/` locally first, e.g. `python3 -m http.server 8766`):
   ```bash

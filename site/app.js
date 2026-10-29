@@ -149,6 +149,7 @@
   var CHAPTERS = {
     1: [
       { say: "Hi! I'm Fusion, mission control. 👋" },
+      { say: "Today's Mission Commander is Mahnoor Saeed. She's in charge of every launch. 🎖️" },
       { say: "Tonight's rocket was built and launched by hand. No tests. No checks." },
       { run: function () { rocket("shake"); }, wait: 1600 },
       { run: function () { rocket("exploded"); explode(); }, wait: 900 },
@@ -182,9 +183,10 @@
       { run: function () { count(2); }, wait: 1000 },
       { run: function () { count(1); }, wait: 1000 },
       { run: function () { rocket("ignite launch"); }, wait: 2600 },
-      { run: function () { confetti(); show("finale", true); }, wait: 800 },
+      { run: function () { confetti(); show("finale", true); document.body.classList.add("finale-on"); }, wait: 800 },
       { say: "Welcome to the cloud, {rocket}! ☁️" },
-      { say: "Code to cloud. Safely. That's CI/CD. 💜" }
+      { say: "Code to cloud. Safely. That's CI/CD. 💜" },
+      { say: "Great launch, Commander Mahnoor! 🫡" }
     ]
   };
 

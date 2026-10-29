@@ -1,6 +1,7 @@
 # Ship It Live 🚀
 
-A tiny website with a real CI/CD pipeline, built for a live talk.
+**A DevFusion client rescue story**, told live with a real CI/CD pipeline.
+Lahore Bites is a fictional client made for the demo.
 Every push to `main` is **tested → built → deployed** to GitHub Pages automatically.
 
 **Live site:** https://sudo-mahnoor.github.io/ship-it-live/
@@ -15,8 +16,8 @@ push ──► Test ──► Build ──► Deploy ──► 📱 every phone 
 
 | Path | What it is |
 |---|---|
-| `site/` | The website (HTML, CSS, JS). `data.json` holds the text shown on screen |
-| `tests/check_site.py` | Quality gate: valid JSON, sensible vote, no leaked secrets |
+| `site/` | The website (HTML, CSS, JS, DevFusion logo). `data.json` holds the chapter and today's special |
+| `tests/check_site.py` | Quality gate: valid JSON, chapter 1 to 4, sensible special, no leaked secrets |
 | `.github/workflows/pipeline.yml` | The pipeline: Test → Build → Deploy |
 
 Open phones poll for a new deploy every 10 seconds, so the page updates on its own.
@@ -30,23 +31,29 @@ Open phones poll for a new deploy every 10 seconds, so the page updates on its o
 5. Optional, for the PR demo: **Settings → Branches → Add rule** for `main`, then turn on
    *Require status checks to pass* and pick **Test**.
 
-## Live demo steps
+## Live demo steps: the story
 
-### 1. Ship a change (audience vote)
-Edit `site/data.json` and change `"vote"` to the word the room picked:
+Everything is driven by two lines in `site/data.json`:
 ```json
-"vote": "Biryani 🍛",
+"chapter": 1,
+"special": "Chicken Karahi 🍲",
 ```
-Commit and push to `main`. Show the Actions tab: Test → Build → Deploy. About a minute later, every phone updates.
 
-### 2. Break my pipeline
+| Chapter | On every phone | What you do |
+|---|---|---|
+| **1. The 3am call** | Store crashed, grey, 502 error | Starting state. Tell the story: manual edits on the live server broke it |
+| **2. The rescue** | Store back online, pipeline on | Set `"chapter": 2` and the room's vote as `"special"`. Push and show Test → Build → Deploy |
+| **3. The Friday test** | "Someone pushes a broken menu..." | Set `"chapter": 3`, push. Then do *Break my pipeline* below |
+| **4. Back in business** | Happy ending + DevFusion call to action | Set `"chapter": 4`, push. Close the talk |
+
+### Break my pipeline (during chapter 3)
 Pick one:
 
 - **Broken JSON:** delete a closing quote in `data.json`
 - **Leaked secret:** add a line with AWS's public example key, `AKIA` followed by `IOSFODNN7EXAMPLE`
-- **Bad data:** set `"vote"` to an empty string, or one longer than 30 characters
+- **Bad data:** set `"special"` to an empty string, or `"chapter": 5`
 
-Push it. **Test** turns red ❌, Build and Deploy never run, and **the live site stays on the last good version.**
+Push it. **Test** turns red ❌, Build and Deploy never run, and **every phone stays on chapter 3.**
 Then fix it, push again, and it goes green ✅.
 
 ### 3. Pull request flow (optional)
@@ -60,6 +67,6 @@ python3 tests/check_site.py
 
 ## Reset after rehearsal
 ```bash
-git checkout demo-start -- site/data.json
+git checkout story-start -- site/data.json
 git commit -m "Reset demo" && git push
 ```

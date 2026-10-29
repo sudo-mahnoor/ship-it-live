@@ -8,7 +8,9 @@ import sys
 from pathlib import Path
 
 SITE = Path(__file__).resolve().parent.parent / "site"
-MAX_VOTE_LENGTH = 30
+MAX_SPECIAL_LENGTH = 30
+CHAPTERS = (1, 2, 3, 4)
+TEXT_SUFFIXES = {".html", ".css", ".js", ".json"}
 
 # Common credential shapes. Real projects use a dedicated scanner (gitleaks, GitHub secret scanning).
 SECRET_PATTERNS = {
@@ -28,23 +30,23 @@ def check(ok, message):
 
 
 # 1. Required files exist
-for name in ("index.html", "style.css", "app.js", "data.json"):
+for name in ("index.html", "style.css", "app.js", "data.json", "assets/logo.png"):
     check((SITE / name).is_file(), f"{name} exists")
 
-# 2. data.json is valid and the vote is sensible
+# 2. data.json is valid and the story data is sensible
 try:
     data = json.loads((SITE / "data.json").read_text(encoding="utf-8"))
     check(True, "data.json is valid JSON")
-    vote = str(data.get("vote", "")).strip()
-    check(bool(vote), "vote is not empty")
-    check(len(vote) <= MAX_VOTE_LENGTH, f"vote is at most {MAX_VOTE_LENGTH} characters")
-    check(bool(str(data.get("message", "")).strip()), "message is not empty")
+    check(data.get("chapter") in CHAPTERS, f"chapter is one of {CHAPTERS}")
+    special = str(data.get("special", "")).strip()
+    check(bool(special), "special is not empty")
+    check(len(special) <= MAX_SPECIAL_LENGTH, f"special is at most {MAX_SPECIAL_LENGTH} characters")
 except (OSError, json.JSONDecodeError) as err:
     check(False, f"data.json is valid JSON ({err})")
 
 # 3. No secrets in anything we ship
 for path in sorted(SITE.rglob("*")):
-    if not path.is_file():
+    if not path.is_file() or path.suffix not in TEXT_SUFFIXES:
         continue
     text = path.read_text(encoding="utf-8", errors="ignore")
     for label, pattern in SECRET_PATTERNS.items():

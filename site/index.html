@@ -3,23 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ship It Live</title>
+  <title>Client Rescue · DevFusion</title>
+  <link rel="icon" href="assets/monogram.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <p class="live"><span class="dot"></span> LIVE IN PRODUCTION</p>
-    <h1 id="message">Hello Codrithm Sparks! 👋</h1>
+  <header>
+    <img class="logo" src="assets/logo.png" alt="DevFusion">
+    <span class="live"><span class="dot"></span> LIVE</span>
+  </header>
 
-    <section class="card">
-      <p class="label">Today's vote</p>
-      <p id="vote" class="vote">…</p>
+  <main>
+    <p class="kicker">A DevFusion client rescue</p>
+
+    <ol class="tracker" id="tracker" aria-label="Story progress">
+      <li>Crash</li><li>Rescue</li><li>Test</li><li>Launch</li>
+    </ol>
+
+    <p class="chapter-no" id="chapter-no">Chapter 1</p>
+    <h1 id="title">The 3am call</h1>
+    <p class="story" id="story"></p>
+
+    <section class="store" id="store">
+      <div class="store-head">
+        <span class="store-name">Lahore Bites</span>
+        <span class="status" id="status">Down</span>
+      </div>
+      <p class="store-label" id="store-label">Today's special</p>
+      <p class="special" id="special">…</p>
     </section>
 
-    <p class="hint">Keep this page open. When the pipeline ships, it updates by itself.</p>
+    <section class="cta" id="cta" hidden>
+      <p class="cta-line">Built by engineers. Run by engineers.</p>
+      <p class="cta-sub">Tell us what's breaking.</p>
+      <a class="cta-link" href="https://devfusion.tech" target="_blank" rel="noopener">devfusion.tech</a>
+    </section>
 
-    <footer id="deploy">Deploy info loading…</footer>
+    <p class="hint">Keep this page open. It updates by itself on every deploy.</p>
   </main>
+
+  <footer>
+    <p id="deploy">Deploy info loading…</p>
+    <p class="note">Lahore Bites is a fictional client made for this demo.</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>

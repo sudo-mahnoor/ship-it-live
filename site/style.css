@@ -1,71 +1,191 @@
-* { box-sizing: border-box; margin: 0; }
+/* DevFusion brand: devfusion-branding/DESIGN.md */
+:root {
+  --dark: #0c0a12;
+  --ink: #0d0d0d;
+  --purple: #a855f7;
+  --violet: #a535ff;
+  --lilac: #c08cff;
+  --lavender: #dcccf1;
+  --muted: #a49bb8;
+  --red: #f87171;
+  --amber: #fbbf24;
+  --green: #4ade80;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #f4f4f8;
-  background: radial-gradient(circle at 20% 10%, #3b1d7a, transparent 55%),
-              radial-gradient(circle at 80% 90%, #0b5e6e, transparent 55%),
-              #0d0d17;
+  display: flex;
+  flex-direction: column;
+  font-family: "Montserrat", system-ui, sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at 15% 0%, rgba(165, 53, 255, 0.28), transparent 50%),
+              radial-gradient(circle at 90% 100%, rgba(192, 140, 255, 0.16), transparent 45%),
+              var(--dark);
 }
 
-main { width: 100%; max-width: 560px; text-align: center; }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+}
+
+.logo { height: 34px; width: auto; }
 
 .live {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
+  gap: 7px;
+  padding: 5px 12px;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  background: rgba(74, 222, 128, 0.12);
 }
 
 .dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: #4ade80;
+  background: var(--green);
   animation: pulse 1.6s infinite;
 }
 
-h1 { margin: 24px 0 32px; font-size: clamp(1.8rem, 6vw, 2.8rem); line-height: 1.2; }
-
-.card {
-  padding: 32px 24px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 8px 22px 24px;
 }
 
-.label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a5a5c0; }
-
-.vote { margin-top: 12px; font-size: clamp(2.4rem, 11vw, 4.5rem); font-weight: 800; }
-
-.hint { margin-top: 24px; color: #a5a5c0; font-size: 0.95rem; }
-
-footer {
-  margin-top: 32px;
-  font-family: ui-monospace, Menlo, Consolas, monospace;
+.kicker {
   font-size: 0.8rem;
-  color: #7c7c99;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lilac);
 }
+
+/* Story progress */
+.tracker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin: 16px 0 26px;
+  list-style: none;
+}
+
+.tracker li {
+  padding-top: 10px;
+  border-top: 4px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: border-color 0.4s, color 0.4s;
+}
+
+.tracker li.done { border-color: var(--purple); color: var(--lavender); }
+.tracker li.current { border-image: linear-gradient(90deg, var(--lilac), var(--violet)) 1; color: #fff; }
+
+.chapter-no { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+
+h1 {
+  margin-top: 2px;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.8rem, 13vw, 4.4rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+}
+
+.story { margin-top: 14px; font-size: 1.02rem; line-height: 1.6; color: var(--lavender); }
+
+/* The client's storefront */
+.store {
+  margin-top: 26px;
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: opacity 0.4s, filter 0.4s;
+}
+
+.store-head { display: flex; align-items: center; justify-content: space-between; }
+
+.store-name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; }
+
+.status {
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status.down { color: var(--red); background: rgba(248, 113, 113, 0.14); }
+.status.fixing { color: var(--amber); background: rgba(251, 191, 36, 0.14); }
+.status.up { color: var(--green); background: rgba(74, 222, 128, 0.14); }
+
+.store-label {
+  margin-top: 18px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.special { margin-top: 6px; font-size: clamp(1.8rem, 8vw, 2.6rem); font-weight: 700; line-height: 1.15; }
+
+.store.crashed { filter: grayscale(1); opacity: 0.6; }
+.store.crashed .special { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.05rem; color: var(--red); }
+
+/* Final chapter call to action */
+.cta {
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 18px;
+  text-align: center;
+  background: linear-gradient(90deg, var(--lilac), var(--violet));
+}
+
+.cta-line { font-family: "Bebas Neue", Impact, sans-serif; font-size: 2rem; line-height: 1; }
+.cta-sub { margin-top: 6px; font-style: italic; }
+
+.cta-link {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: var(--ink);
+}
+
+.hint { margin-top: 22px; font-size: 0.85rem; text-align: center; color: var(--muted); }
+
+footer { padding: 0 22px 22px; text-align: center; font-size: 0.72rem; color: #6f6684; }
+footer #deploy { font-family: ui-monospace, Menlo, Consolas, monospace; margin-bottom: 4px; }
 
 /* Played on every phone when a new deploy lands */
-.updated .card { animation: flash 1.2s ease-out; }
+.updated main { animation: arrive 0.9s ease-out; }
+.updated .store { animation: flash 1.4s ease-out; }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
 
 @keyframes flash {
-  0% { transform: scale(1.08); box-shadow: 0 0 0 4px #4ade80; }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 transparent; }
+  0% { box-shadow: 0 0 0 4px var(--purple); }
+  100% { box-shadow: 0 0 0 0 transparent; }
 }

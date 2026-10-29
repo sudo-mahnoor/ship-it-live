@@ -189,3 +189,41 @@ footer #deploy { font-family: ui-monospace, Menlo, Consolas, monospace; margin-b
   0% { box-shadow: 0 0 0 4px var(--purple); }
   100% { box-shadow: 0 0 0 0 transparent; }
 }
+
+/* Laptop and projector: two columns, big type for the back row */
+@media (min-width: 900px) {
+  header { padding: 24px 48px; }
+  .logo { height: 44px; }
+  .live { font-size: 0.9rem; padding: 7px 16px; }
+
+  main {
+    max-width: 1200px;
+    padding: 12px 48px 32px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    column-gap: 56px;
+    align-content: center;
+  }
+
+  .kicker, .tracker, .chapter-no, h1, .story { grid-column: 1; }
+  .store, .cta { grid-column: 2; }
+  .store { grid-row: 1 / span 4; align-self: center; margin-top: 0; padding: 32px; }
+  .cta { grid-row: 5 / span 2; align-self: start; padding: 26px; }
+  .hint { grid-column: 1 / -1; }
+
+  .kicker { font-size: 1rem; }
+  .tracker { margin: 18px 0 28px; }
+  .tracker li { font-size: 0.85rem; padding-top: 10px; border-top-width: 5px; }
+  .chapter-no { font-size: 1rem; }
+  h1 { font-size: clamp(4rem, 6.5vw, 6.5rem); }
+  .story { margin-top: 16px; font-size: 1.3rem; line-height: 1.55; }
+  .store-name { font-size: 2.2rem; }
+  .status { font-size: 0.9rem; padding: 6px 14px; }
+  .store-label { margin-top: 22px; font-size: 0.9rem; }
+  .special { margin-top: 8px; font-size: clamp(2.4rem, 4vw, 3.6rem); }
+  .store.crashed .special { font-size: 1.4rem; }
+  .cta-line { font-size: 2.4rem; }
+  .cta-sub { font-size: 1.1rem; }
+  .hint { margin-top: 28px; font-size: 0.95rem; }
+  footer { font-size: 0.8rem; padding-bottom: 20px; }
+}

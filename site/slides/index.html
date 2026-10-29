@@ -158,13 +158,13 @@
     .motto { margin-top: 26px; font-family: "Bebas Neue", Impact, sans-serif; font-size: 62px; line-height: 1; text-align: center; }
 
     /* Thank you */
-    .thanks-row { margin-top: 40px; display: flex; align-items: flex-end; justify-content: space-between; }
-    .thanks-person .name { font-family: "Bebas Neue", Impact, sans-serif; font-size: 80px; line-height: 1; }
-    .thanks-person .role { margin-top: 8px; font-size: 26px; color: var(--lavender); }
-    .thanks-person .ask { margin-top: 40px; font-size: 24px; line-height: 1.5; color: var(--lavender); }
-    .qrs { display: flex; }
-    .qrs > div + div { margin-left: 34px; }
-
+    .s-thanks { display: flex; align-items: center; justify-content: space-between; padding-right: 96px; }
+    .s-thanks h2 { font-size: 150px; }
+    .s-thanks .speaker { margin-top: 36px; }
+    .s-thanks .speaker .name { font-size: 64px; }
+    .s-thanks .speaker .role { font-size: 24px; }
+    .s-thanks .ask { margin-top: 30px; font-size: 24px; line-height: 1.5; color: var(--lavender); }
+    .s-thanks .page { position: absolute; }
     @keyframes glow {
       0% { transform: scale(1); }
       50% { transform: scale(1.06); border-color: var(--lilac); }
@@ -373,21 +373,19 @@
   </section>
 
   <!-- 10. Thank you -->
-  <section class="slide">
-    <p class="kicker rise">Thank you</p>
-    <h2 class="rise d1" style="font-size: 96px;">Questions<span class="grad">?</span></h2>
-    <div class="thanks-row">
-      <div class="thanks-person rise d2">
+  <section class="slide s-thanks">
+    <div class="thanks-text">
+      <p class="kicker rise">Thank you</p>
+      <h2 class="rise d1">Questions<span class="grad">?</span></h2>
+      <div class="speaker rise d2">
         <p class="name">Mahnoor Saeed</p>
         <p class="role">DevOps Engineer · DevFusion Tech</p>
-        <p class="ask">Build your own pipeline,<br>and send me the live link.</p>
       </div>
-      <div class="qrs rise d3">
-        <div>
-          <div class="qr"><img src="assets/qr-linkedin.png" width="260" height="260" alt="QR code to Mahnoor's LinkedIn"></div>
-          <p class="qr-label">Connect on LinkedIn</p>
-        </div>
-      </div>
+      <p class="ask rise d3">Build your own pipeline,<br>and send me the live link.</p>
+    </div>
+    <div class="rise d3">
+      <div class="qr"><img src="assets/qr-linkedin.png" width="340" height="340" alt="QR code to Mahnoor's LinkedIn"></div>
+      <p class="qr-label" style="font-size: 22px;">Connect on LinkedIn</p>
     </div>
     <p class="page">10</p>
   </section>

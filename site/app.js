@@ -91,8 +91,8 @@
 
   function explode() {
     var boom = $("boom");
-    var colors = ["#fbbf24", "#f97316", "#f87171", "#c08cff", "#ffffff"];
-    var html = '<div class="fireball"></div>';
+    var colors = ["#fde047", "#f97316", "#dc2626", "#c08cff", "#ffffff"];
+    var html = '<div class="fireball"></div><div class="pow">BOOM!</div>';
     for (var i = 0; i < 24; i++) {
       var angle = (Math.PI * 2 * i) / 24;
       var dist = 14 + Math.random() * 20;
